@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import * as Ant from 'antd';
 import * as AppActions from '../utils';
 import { useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Menu } from '@styled-icons/material';
+import { EarthAmericas } from '@styled-icons/fa-solid';
 
 const { useBreakpoint } = Ant.Grid;
 
@@ -14,8 +16,20 @@ const navItems = [
 
 function Header() {
   const location = useLocation();
+  const { i18n } = useTranslation();
   const screens = useBreakpoint();
   const [drawer, setDrawer] = React.useState(false);
+
+  const changeLanguage = React.useCallback(
+    async (lang) => {
+      if (lang === i18n.language) return;
+      AppActions.setLoading(true);
+      await AppActions.delay(500);
+      i18n.changeLanguage(lang);
+      AppActions.setLoading(false);
+    },
+    [i18n],
+  );
 
   return (
     <Wrapper>
@@ -30,20 +44,50 @@ function Header() {
 
         <nav>
           {!screens.xs && (
-            <ul>
-              {navItems.map((it) => (
-                <li key={it.label}>
-                  <ActionButton
-                    type="link"
-                    onClick={() => {
-                      AppActions.navigate(it.path);
-                    }}
-                  >
-                    {it.label}
-                  </ActionButton>
-                </li>
-              ))}
-            </ul>
+            <Ant.Space>
+              <ul>
+                {navItems.map((it) => (
+                  <li key={it.label}>
+                    <ActionButton
+                      type="link"
+                      onClick={() => {
+                        AppActions.navigate(it.path);
+                      }}
+                    >
+                      {it.label}
+                    </ActionButton>
+                  </li>
+                ))}
+              </ul>
+              <Ant.Divider vertical style={{ borderColor: 'var(--secondary-color)', height: 25 }} />
+              <Ant.Dropdown
+                menu={{
+                  items: [
+                    { key: 'zh-TW', label: '繁中' },
+                    { key: 'en', label: 'EN' },
+                  ],
+                  selectable: true,
+                  defaultSelectedKeys: [i18n.language],
+                  onClick: ({ key }) => {
+                    changeLanguage(key);
+                  },
+                  style: { minWidth: 80, borderRadius: 8, textAlign: 'center' },
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    gap: 8,
+                    alignItems: 'center',
+                    cursor: 'pointer',
+                    marginLeft: 'var(--base-padding)',
+                  }}
+                >
+                  <EarthAmericas size={20} color="#333" />
+                  {i18n.language === 'en' ? 'EN' : '繁中'}
+                </div>
+              </Ant.Dropdown>
+            </Ant.Space>
           )}
 
           {screens.xs && <Menu size={30} color="var(--secondary-color)" onClick={() => setDrawer(true)} />}
@@ -67,6 +111,21 @@ function Header() {
           }}
           items={navItems.map((it) => ({ key: it.path, label: it.label }))}
         />
+        {/* <Ant.Divider style={{ borderColor: 'var(--secondary-color)', opacity: 0.3 }} /> */}
+
+        <div style={{ textAlign: 'center', marginTop: 30 }}>
+          <Ant.Select
+            value={i18n.language}
+            style={{ minWidth: 120 }}
+            options={[
+              { value: 'zh-TW', label: '繁體中文' },
+              { value: 'en', label: 'English' },
+            ]}
+            onChange={(value) => {
+              changeLanguage(value);
+            }}
+          />
+        </div>
       </Ant.Drawer>
     </Wrapper>
   );
@@ -90,7 +149,7 @@ const Wrapper = styled.header`
     & > nav {
       margin-left: auto;
 
-      & > ul {
+      & ul {
         display: flex;
       }
     }
