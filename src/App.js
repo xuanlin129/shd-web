@@ -2,6 +2,7 @@ import React from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import { ConfigProvider } from 'antd';
+import { HelmetProvider } from 'react-helmet-async';
 import theme from './config/theme';
 import router from './router';
 import globalCss from './styles/global';
@@ -21,9 +22,11 @@ function App() {
         components: {},
       }}
     >
-      <GlobalStyle />
-      <GlobalSpinner />
-      <RouterProvider router={router} />
+      <HelmetProvider>
+        <GlobalStyle />
+        <GlobalSpinner />
+        <RouterProvider router={router} />
+      </HelmetProvider>
     </ConfigProvider>
   );
 }

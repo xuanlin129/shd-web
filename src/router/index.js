@@ -1,5 +1,6 @@
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
+import Helmet from '../components/Helmet';
 
 const Layout = React.lazy(() => import('../layouts/Layout'));
 const Home = React.lazy(() => import('../pages/Home'));
@@ -11,13 +12,30 @@ const routes = [
     path: '/',
     element: <Layout />,
     children: [
-      { index: true, element: <Home /> },
-      { path: 'about', element: <About /> },
-      { path: 'contact', element: <Contact /> },
+      { index: true, element: <Home />, title: '首頁' },
+      { path: 'about', element: <About />, title: '關於' },
+      { path: 'contact', element: <Contact />, title: '聯絡' },
     ],
   },
 ];
 
-const router = createBrowserRouter(routes);
+function applyHelmetToRoutes(routes) {
+  return routes.map((route) => {
+    const { children, title, element, ...rest } = route;
+    const newRoute = { ...rest };
+
+    if (element) {
+      newRoute.element = title ? <Helmet title={title}>{element}</Helmet> : element;
+    }
+
+    if (children) {
+      newRoute.children = applyHelmetToRoutes(children);
+    }
+
+    return newRoute;
+  });
+}
+
+const router = createBrowserRouter(applyHelmetToRoutes(routes));
 
 export default router;
