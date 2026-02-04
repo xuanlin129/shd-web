@@ -1,7 +1,7 @@
-import { css } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 import theme from '../config/theme';
 
-export default css`
+const GlobalStyle = createGlobalStyle`
   :root {
     --primary-color: ${theme.primary};
     --secondary-color: ${theme.secondary};
@@ -24,3 +24,5 @@ export default css`
     padding: 0 var(--base-padding);
   }
 `;
+
+export default GlobalStyle;
