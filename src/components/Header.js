@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import * as Ant from 'antd';
+import { Button, Divider, Drawer, Dropdown, Grid, Menu, Select, Space } from 'antd';
 import * as AppActions from '../utils';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Menu } from '@styled-icons/material';
+import { Menu as MenuIcon } from '@styled-icons/material';
 import { EarthAmericas } from '@styled-icons/fa-solid';
 
-const { useBreakpoint } = Ant.Grid;
+const { useBreakpoint } = Grid;
 
 const navItems = [
   { path: '/about', label: '關於' },
@@ -44,7 +44,7 @@ function Header() {
 
         <nav>
           {!screens.xs && (
-            <Ant.Space>
+            <Space>
               <ul>
                 {navItems.map((it) => (
                   <li key={it.label}>
@@ -59,8 +59,8 @@ function Header() {
                   </li>
                 ))}
               </ul>
-              <Ant.Divider vertical style={{ borderColor: 'var(--secondary-color)', height: 25 }} />
-              <Ant.Dropdown
+              <Divider vertical style={{ borderColor: 'var(--secondary-color)', height: 25 }} />
+              <Dropdown
                 menu={{
                   items: [
                     { key: 'zh-TW', label: '繁中' },
@@ -86,22 +86,22 @@ function Header() {
                   <EarthAmericas size={20} color="#333" />
                   {i18n.language === 'en' ? 'EN' : '繁中'}
                 </div>
-              </Ant.Dropdown>
-            </Ant.Space>
+              </Dropdown>
+            </Space>
           )}
 
-          {screens.xs && <Menu size={30} color="var(--secondary-color)" onClick={() => setDrawer(true)} />}
+          {screens.xs && <MenuIcon size={30} color="var(--secondary-color)" onClick={() => setDrawer(true)} />}
         </nav>
       </div>
 
-      <Ant.Drawer
+      <Drawer
         title="選單"
         onClose={() => {
           setDrawer(false);
         }}
         open={drawer}
       >
-        <Ant.Menu
+        <Menu
           mode="vertical"
           style={{ border: 'none' }}
           selectedKeys={location.pathname}
@@ -111,10 +111,10 @@ function Header() {
           }}
           items={navItems.map((it) => ({ key: it.path, label: it.label }))}
         />
-        {/* <Ant.Divider style={{ borderColor: 'var(--secondary-color)', opacity: 0.3 }} /> */}
+        {/* <Divider style={{ borderColor: 'var(--secondary-color)', opacity: 0.3 }} /> */}
 
         <div style={{ textAlign: 'center', marginTop: 30 }}>
-          <Ant.Select
+          <Select
             value={i18n.language}
             style={{ minWidth: 120 }}
             options={[
@@ -126,7 +126,7 @@ function Header() {
             }}
           />
         </div>
-      </Ant.Drawer>
+      </Drawer>
     </Wrapper>
   );
 }
@@ -167,7 +167,7 @@ const Logo = styled.img`
   }
 `;
 
-const ActionButton = styled(Ant.Button)`
+const ActionButton = styled(Button)`
   &&& {
     color: inherit;
     font-size: 1rem;
