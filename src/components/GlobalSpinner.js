@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useOutlet } from 'reconnect.js';
 
-export default function GlobalSpinner() {
+function GlobalSpinner() {
   const [mounted, setMounted] = React.useState(false); // workaround to handle the initial flash issue
   const [info = {}] = useOutlet('loading');
   const { loading, message } = info;
@@ -81,3 +81,5 @@ const Wrapper = styled.div`
     mix-blend-mode: difference;
   }
 `;
+
+export default GlobalSpinner;
