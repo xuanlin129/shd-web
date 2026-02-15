@@ -1,7 +1,7 @@
-import { createGlobalStyle } from 'styled-components';
+import { css, createGlobalStyle } from 'styled-components';
 import theme from '../config/theme';
 
-const GlobalStyle = createGlobalStyle`
+const style = css`
   :root {
     --primary-color: ${theme.primary};
     --secondary-color: ${theme.secondary};
@@ -23,6 +23,10 @@ const GlobalStyle = createGlobalStyle`
     margin: 0 auto;
     padding: 0 var(--base-padding);
   }
+`;
+
+const GlobalStyle = createGlobalStyle`
+  ${style}
 `;
 
 export default GlobalStyle;
