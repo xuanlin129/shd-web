@@ -235,7 +235,7 @@ const ContactSection = styled.div`
       gap: 16px;
 
       .icon {
-        color: var(--secondary-color); /* 如果沒有次要色，可以用 rgba(255, 255, 255, 0.6) 代替 */
+        color: #fff;
         flex-shrink: 0;
         margin-top: 2px;
         opacity: 0.8;
