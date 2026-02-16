@@ -5,6 +5,7 @@ const style = css`
   :root {
     --primary-color: ${theme.primary};
     --secondary-color: ${theme.secondary};
+    --bg-light-color: ${theme.bgLight};
     --navbar-height: 80px;
     --base-padding: 16px;
 

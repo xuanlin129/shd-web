@@ -1,8 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Row, Col } from 'antd';
+import { Row, Col, Card } from 'antd';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import RippleButton from '../components/RippleButton';
+import * as AppActions from '../utils';
+import { UserTie, HandHoldingHeart, ShippingFast } from 'styled-icons/fa-solid';
+
+const services = ['粉體烤漆服務', '金屬表面前處理', '多種色系與材質選擇', '客製化服務'];
+const advantages = [
+  {
+    icon: <UserTie size={32} />,
+    title: '專業',
+    desc: '針對產品的材質，提供好的建議及製程方式，為客戶的產品品質嚴格把關',
+  },
+  {
+    icon: <HandHoldingHeart size={32} />,
+    title: '用心',
+    desc: '依照個別客戶需求，完善產品包裝及出貨',
+  },
+  {
+    icon: <ShippingFast size={32} />,
+    title: '快速',
+    desc: '產品交期預計3-7個工作天，急單可以預先告知',
+  },
+];
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -95,6 +117,53 @@ function Home() {
           </Row>
         </div>
       </Intro>
+
+      <section style={{ background: '#fff' }}>
+        <div className="container">
+          <Row gutter={[32, 48]} justify="center">
+            {advantages.map((item, index) => (
+              <Col xs={24} md={8} key={index}>
+                <ItemCard>
+                  <IconWrapper>{item.icon}</IconWrapper>
+                  <Content>
+                    <h3>{item.title}</h3>
+                    <p>{item.desc}</p>
+                  </Content>
+                </ItemCard>
+              </Col>
+            ))}
+          </Row>
+        </div>
+      </section>
+
+      <Service>
+        <div className="container">
+          <h2>我們的服務</h2>
+
+          <Row gutter={[1, 1]}>
+            {services.map((it, idx) => (
+              <Col xs={12} sm={6} key={idx}>
+                <StyledCard
+                  hoverable
+                  cover={<img draggable={false} alt={it} src={`https://picsum.photos/500/500/?random=${idx}`} />}
+                >
+                  <Card.Meta title={it} />
+                </StyledCard>
+              </Col>
+            ))}
+          </Row>
+
+          <div style={{ textAlign: 'center', marginTop: 48 }}>
+            <RippleButton
+              onClick={() => {
+                AppActions.navigate('/service');
+              }}
+            >
+              查看更多服務
+            </RippleButton>
+          </div>
+        </div>
+      </Service>
     </Wrapper>
   );
 }
@@ -102,6 +171,13 @@ function Home() {
 const Wrapper = styled.div`
   section {
     padding: 90px 0;
+
+    & h2 {
+      font-size: 2rem;
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 50px;
+    }
   }
 `;
 
@@ -251,6 +327,7 @@ const Intro = styled.section`
       margin-bottom: 24px;
       font-size: 2rem;
       font-weight: 500;
+      text-align: left;
     }
 
     p {
@@ -328,6 +405,89 @@ const InfoCard = styled.div`
     & > .title {
       font-size: 1.5rem;
     }
+  }
+`;
+
+const Service = styled.section`
+  background: linear-gradient(0deg, var(--bg-light-color) 50%, #fff 50%);
+`;
+
+const StyledCard = styled(Card)`
+  && {
+    background: #fff;
+    border: none;
+    box-shadow: 0 0 1px #ccc;
+    border-radius: 0;
+    overflow: hidden;
+    transition: transform 0.3s;
+    cursor: initial;
+
+    & img {
+      border-radius: 0;
+    }
+
+    & .ant-card-meta-title {
+      color: var(--primary-color);
+    }
+
+    &:hover {
+      transform: scale(1.1);
+      z-index: 1;
+    }
+  }
+`;
+
+const ItemCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  padding: 24px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+`;
+
+const IconWrapper = styled.div`
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--bg-light-color);
+  color: var(--primary-color);
+  margin-bottom: 24px;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+
+  ${ItemCard}:hover & {
+    background-color: var(--primary-color);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(17, 45, 78, 0.3);
+  }
+`;
+
+const Content = styled.div`
+  h3 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--primaryColor);
+    letter-spacing: 1.5px;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #666;
+    margin: 0;
+    text-align: justify;
+    text-align-last: center;
   }
 `;
 
