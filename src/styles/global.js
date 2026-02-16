@@ -27,6 +27,7 @@ const style = css`
     max-width: 1380px;
     margin: 0 auto;
     padding: 0 var(--base-padding);
+    overflow-x: clip;
   }
 
   @media (min-width: 576px) {

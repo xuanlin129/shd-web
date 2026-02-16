@@ -26,6 +26,7 @@ const Wrapper = styled.section`
   display: flex;
   justify-content: center;
   align-items: end;
+  overflow: hidden;
 
   &::before {
     content: '';
