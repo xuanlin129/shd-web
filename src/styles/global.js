@@ -13,7 +13,7 @@ const style = css`
   }
 
   body {
-    background: #fff;
+    background: var(--primary-color);
     overflow-x: hidden;
   }
 
