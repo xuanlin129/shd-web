@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import RippleButton from '../components/RippleButton';
 import * as AppActions from '../utils';
 import { UserTie, HandHoldingHeart, ShippingFast } from 'styled-icons/fa-solid';
+import Contact from '../components/Contact';
 
 const services = ['粉體烤漆服務', '金屬表面前處理', '多種色系與材質選擇', '客製化服務'];
 const environmentImages = Object.values(
@@ -97,10 +98,10 @@ function Home() {
           <video
             src={new URL('@/assets/banner.mp4', import.meta.url).href}
             style={{ width: '100%' }}
-            autoplay=""
-            muted=""
-            playsinline=""
-            loop=""
+            autoPlay
+            muted
+            playsInline
+            loop
           ></video>
         </div>
       </Hero>
@@ -203,6 +204,8 @@ function Home() {
           </div>
         </div>
       </Environment>
+
+      <Contact />
     </Wrapper>
   );
 }
