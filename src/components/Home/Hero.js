@@ -40,7 +40,8 @@ const Wrapper = styled.section`
   }
 
   & > .content {
-    width: max-content;
+    width: 100%;
+    max-width: 600px;
     color: #fff;
     text-align: center;
     position: absolute;

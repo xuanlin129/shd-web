@@ -84,7 +84,7 @@ export default function About() {
 
   return (
     <>
-      <PageHeader title="關於興樺德" />
+      <PageHeader title="關於興樺德" bgText="ABOUT" />
       <Wrapper>
         <div className="container">
           <Ant.Row justify="space-between" id="content">

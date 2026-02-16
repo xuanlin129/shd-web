@@ -8,7 +8,7 @@ function Contact() {
   return (
     <Wrapper id="contact">
       <div className="container">
-        <Row align="middle" justify="space-between" gutter={[48, 48]}>
+        <Row align="middle" justify="space-between" gutter={[{ xs: 24, md: 48 }, 48]}>
           <Col xs={24} md={14}>
             <div className="content">
               <h2>與興樺德攜手，開啟您的卓越產品旅程。</h2>
