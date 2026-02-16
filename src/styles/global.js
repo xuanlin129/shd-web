@@ -14,8 +14,12 @@ const style = css`
   }
 
   body {
-    background: var(--primary-color);
+    background: #fff;
     overflow-x: hidden;
+  }
+
+  .wrapper {
+    padding: 90px 0;
   }
 
   .container {
