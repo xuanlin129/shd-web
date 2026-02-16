@@ -50,7 +50,14 @@ function Home() {
           </div>
         </div>
         <div className="image">
-          <img src="https://picsum.photos/1920/1080/?random=1" />
+          <video
+            src={new URL('@/assets/banner.mp4', import.meta.url).href}
+            style={{ width: '100%' }}
+            autoplay=""
+            muted=""
+            playsinline=""
+            loop=""
+          ></video>
         </div>
       </Hero>
 
