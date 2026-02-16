@@ -8,6 +8,10 @@ import * as AppActions from '../utils';
 import { UserTie, HandHoldingHeart, ShippingFast } from 'styled-icons/fa-solid';
 
 const services = ['粉體烤漆服務', '金屬表面前處理', '多種色系與材質選擇', '客製化服務'];
+const environmentImages = Object.values(
+  import.meta.glob('@/assets/environment_*.{png,jpg,jpeg,PNG,JPG,JPEG}', { eager: true, as: 'url' }),
+);
+
 const advantages = [
   {
     icon: <UserTie size={32} />,
@@ -60,8 +64,26 @@ function AnimatedNumber({ end, duration = 2 }) {
 }
 
 function Home() {
+  const containerRef = React.useRef(null);
+
+  React.useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      const track = containerRef.current.querySelector('.track');
+      if (!track) return;
+
+      gsap.to(track, {
+        x: '-50%',
+        duration: 25,
+        ease: 'none',
+        repeat: -1,
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <Wrapper>
+    <Wrapper ref={containerRef}>
       <Hero>
         <div className="slogan">
           <h1>興樺德興業有限公司</h1>
@@ -164,6 +186,23 @@ function Home() {
           </div>
         </div>
       </Service>
+
+      <Environment>
+        <div className="container">
+          <h2>廠房環境</h2>
+        </div>
+        <div className="marquee">
+          <div className="track">
+            {environmentImages.map((src, i) => (
+              <img key={i} src={src} alt="environment" />
+            ))}
+            {/* Duplicate for seamless loop */}
+            {environmentImages.map((src, i) => (
+              <img key={`dup-${i}`} src={src} alt="environment" />
+            ))}
+          </div>
+        </div>
+      </Environment>
     </Wrapper>
   );
 }
@@ -488,6 +527,41 @@ const Content = styled.div`
     margin: 0;
     text-align: justify;
     text-align-last: center;
+  }
+`;
+
+const Environment = styled.section`
+  background: #fff;
+  padding-bottom: 90px;
+  overflow: hidden;
+
+  & .marquee {
+    width: 100%;
+    margin-top: 48px;
+    overflow: hidden;
+    position: relative;
+
+    & .track {
+      display: flex;
+      gap: 24px;
+      padding-right: 24px;
+      width: max-content;
+
+      & img {
+        height: 300px;
+        width: auto;
+        max-width: initial;
+        object-fit: contain;
+        border-radius: 16px;
+
+        &:nth-child(even) {
+          margin-top: 50px;
+        }
+        &:nth-child(odd) {
+          margin-bottom: 50px;
+        }
+      }
+    }
   }
 `;
 
