@@ -1,17 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Button, Divider, Drawer, Dropdown, Grid, Menu, Select, Space } from 'antd';
+import { Button, Dropdown, Grid, Select, Space } from 'antd';
 import * as AppActions from '../utils';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Menu as MenuIcon } from '@styled-icons/material';
-import { EarthAmericas } from '@styled-icons/fa-solid';
+import { EarthAmericas, Xmark } from '@styled-icons/fa-solid';
 
 const { useBreakpoint } = Grid;
 
 const navItems = [
-  { path: '/about', label: '關於' },
-  { path: '/contact', label: '聯絡' },
+  { path: '/service', label: '服務項目' },
+  { path: '/about', label: '公司介紹' },
+  { path: '/process', label: '產品製程' },
+  { path: '/faq', label: '常見問題' },
+  { path: '/contact', label: '聯繫我們' },
 ];
 
 function Header() {
@@ -33,7 +36,7 @@ function Header() {
 
   return (
     <Wrapper>
-      <div className="container">
+      <div className="">
         <Logo
           src={new URL('@/assets/logo.png', import.meta.url).href}
           alt="Logo"
@@ -59,7 +62,7 @@ function Header() {
                   </li>
                 ))}
               </ul>
-              <Divider vertical style={{ borderColor: 'var(--secondary-color)', height: 25 }} />
+              {/* <Divider vertical style={{ borderColor: 'var(--secondary-color)', height: 25 }} />
               <Dropdown
                 menu={{
                   items: [
@@ -86,11 +89,11 @@ function Header() {
                   <EarthAmericas size={20} color="#333" />
                   {i18n.language === 'en' ? 'EN' : '繁中'}
                 </div>
-              </Dropdown>
+              </Dropdown> */}
             </Space>
           )}
 
-          {screens.xs && <MenuIcon size={30} color="var(--secondary-color)" onClick={() => setDrawer(true)} />}
+          {screens.xs && <MenuIcon size={35} color="#fff" onClick={() => setDrawer(true)} />}
         </nav>
       </div>
 
@@ -99,21 +102,35 @@ function Header() {
         onClose={() => {
           setDrawer(false);
         }}
-        open={drawer}
+        className={drawer && 'active'}
       >
-        <Menu
-          mode="vertical"
-          style={{ border: 'none' }}
-          selectedKeys={location.pathname}
-          onClick={(e) => {
-            AppActions.navigate(e.key);
+        <ul>
+          {navItems.map((it) => (
+            <li key={it.label}>
+              <span
+                onClick={() => {
+                  AppActions.navigate(it.path);
+                  setDrawer(false);
+                }}
+              >
+                {it.label}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+        <Xmark
+          className="close-btn"
+          size={35}
+          color="#fff"
+          onClick={() => {
             setDrawer(false);
           }}
-          items={navItems.map((it) => ({ key: it.path, label: it.label }))}
         />
-        {/* <Divider style={{ borderColor: 'var(--secondary-color)', opacity: 0.3 }} /> */}
 
-        <div style={{ textAlign: 'center', marginTop: 30 }}>
+        <img className="bg-cover" src={new URL('@/assets/spray.png', import.meta.url).href} alt="spray" />
+
+        {/* <div style={{ textAlign: 'center', marginTop: 30 }}>
           <Select
             value={i18n.language}
             style={{ minWidth: 120 }}
@@ -125,7 +142,7 @@ function Header() {
               changeLanguage(value);
             }}
           />
-        </div>
+        </div> */}
       </Drawer>
     </Wrapper>
   );
@@ -134,15 +151,17 @@ function Header() {
 const Wrapper = styled.header`
   width: 100%;
   height: var(--navbar-height);
-  box-shadow: 0 1px 8px #ccc;
+  // box-shadow: 0 1px 8px #ccc;
   position: fixed;
   top: 0;
   left: 0;
-  background: #fff;
+  background: var(--primary-color);
+  color: #fff;
   z-index: 999;
 
-  & > .container {
+  & > div {
     height: 100%;
+    padding: 0 var(--base-padding);
     display: flex;
     align-items: center;
 
@@ -157,13 +176,17 @@ const Wrapper = styled.header`
 `;
 
 const Logo = styled.img`
-  max-width: 150px;
+  max-width: 120px;
   object-fit: contain;
-  mix-blend-mode: difference;
+  filter: invert(1) brightness(100);
   cursor: pointer;
 
   &:hover {
     opacity: 0.8;
+  }
+
+  @media (min-width: 576px) {
+    margin-left: 15px;
   }
 `;
 
@@ -173,9 +196,61 @@ const ActionButton = styled(Button)`
     font-size: 1rem;
 
     &:hover {
-      color: var(--primary-color);
+      color: inherit;
     }
   }
 `;
 
+const Drawer = styled.section`
+  width: 100vw;
+  height: 100vh;
+  background: var(--primary-color);
+  padding: var(--navbar-height) calc(var(--base-padding) * 3);
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translateX(50%);
+  z-index: 999;
+  transition: all 0.5s ease-out;
+  pointer-events: none;
+  overflow: hidden;
+
+  &.active {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  & > .close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-100%, 100%);
+  }
+
+  & > .bg-cover {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) rotate(20deg) scaleX(2);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  & > ul {
+    background: transparent;
+    color: #fff;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 500;
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+`;
 export default Header;
