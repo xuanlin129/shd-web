@@ -50,7 +50,11 @@ function Intro() {
           </Col>
           <Col xs={24} md={14} lg={12}>
             <div className="content">
-              <h2>新北專業烤漆廠 – 興樺德粉體塗裝</h2>
+              <h2>
+                <font className="paint">新北專業烤漆廠</font>
+                <font className="divider"> – </font>
+                <font className="name">興樺德粉體塗裝</font>
+              </h2>
               <p>我們始終以創新與品質為核心，持續精進專業技術與製程管理，確保每一項服務都穩定可靠。</p>
               <p>
                 在快速變動的市場中，我們以客戶需求為出發點，專注於細節與效率，不只完成任務，更致力於為客戶創造長期價值。
@@ -90,7 +94,8 @@ const Wrapper = styled.section`
       width: 90%;
       aspect-ratio: 2/1;
       object-fit: cover;
-      display: block;
+      display: block
+      text-align: center;
       border-radius: 10rem;
 
       &:last-child {
@@ -104,6 +109,24 @@ const Wrapper = styled.section`
       font-size: 1.75rem;
       font-weight: 500;
       margin-bottom: 1.5rem;
+      text-align: center;
+
+      & > font {
+        &.paint {
+          display: inline-block;
+          border-bottom: 5px solid var(--primary-color);
+          margin-bottom: 1rem;
+        }
+
+        &.divider {
+          display: none;
+        }
+
+        &.name {
+          display: block;
+          font-size: 2rem;
+        }
+      }
     }
 
     & > p {
@@ -143,6 +166,15 @@ const Wrapper = styled.section`
         font-size: 2rem;
         font-weight: 500;
         margin-bottom: 1.5rem;
+        text-align: left;
+
+        & > font {
+          display: inline !important;
+          
+          &.paint {
+            border-bottom: none;
+          }
+        }
       }
 
       & > p {

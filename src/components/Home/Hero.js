@@ -27,6 +27,7 @@ const Wrapper = styled.section`
   justify-content: center;
   align-items: end;
   overflow: hidden;
+  z-index: 1;
 
   &::before {
     content: '';
@@ -38,6 +39,7 @@ const Wrapper = styled.section`
     top: 0;
     left: 0;
     pointer-events: none;
+    z-index: -1;
   }
 
   & > .content {
@@ -46,7 +48,7 @@ const Wrapper = styled.section`
     color: #fff;
     text-align: center;
     position: absolute;
-    top: 12%;
+    bottom: 65%;
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
@@ -55,13 +57,12 @@ const Wrapper = styled.section`
       font-size: 2rem;
       font-weight: 900;
       letter-spacing: 0.25rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 0.5rem;
     }
 
     & > p {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
     }
 
     & > .bg-paint {
@@ -71,8 +72,8 @@ const Wrapper = styled.section`
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%) scaleX(1.2);
-      z-index: -1;
+      transform: translate(-50%, -45%) scaleX(1);
+      pointer-events: none;
     }
   }
 
@@ -89,10 +90,12 @@ const Wrapper = styled.section`
 
       & > h1 {
         font-size: 3rem;
+        margin-bottom: 1.5rem;
       }
 
       & > p {
         font-size: 1.25rem;
+        gap: 1rem;
       }
 
       & > .bg-paint {

@@ -11,7 +11,7 @@ function Service() {
     <Wrapper className="wrapper">
       <div className="container">
         <h2>我們的服務</h2>
-        <Row gutter={[16, 16]}>
+        <Row gutter={[1, 1]}>
           {services.map((it, idx) => (
             <Col xs={12} sm={6} key={idx}>
               <ServiceCard
