@@ -1,5 +1,6 @@
 import { css, createGlobalStyle } from 'styled-components';
 import theme from '../config/theme';
+import ChenYuluoyan from '../assets/fonts/ChenYuluoyan-Thin-Monospaced.ttf';
 
 const style = css`
   :root {
@@ -38,6 +39,16 @@ const style = css`
 `;
 
 const GlobalStyle = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+
+  @font-face {
+    font-family: 'hand-drawn';
+    src: url(${ChenYuluoyan}) format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+  }
+
   ${style}
 `;
 

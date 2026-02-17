@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import * as Ant from 'antd';
+import { Grid, Row, Col, Descriptions } from 'antd';
+import { History, Cogs, Handshake, Leaf } from 'styled-icons/fa-solid';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import company from '../config/company';
 import PageHeader from '../components/PageHeader';
-import { useLocation } from 'react-router-dom';
+
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 const infos = [
   {
@@ -53,112 +58,157 @@ const history = [
 
 const advantages = [
   {
+    icon: <History size={48} />,
     title: '40+ 年專業經驗',
     desc: '深耕金屬粉體烤漆與表面處理產業超過四十年，累積豐富實務經驗，品質穩定、交期可靠。',
   },
   {
+    icon: <Cogs size={48} />,
     title: '全自動化產線',
     desc: '採用全自動前處理設備與自動噴塗系統，降低人為誤差，確保每批產品品質一致。',
   },
   {
+    icon: <Handshake size={48} />,
     title: '穩定合作夥伴',
     desc: '長期服務多家上市公司與知名廠商，遷廠後仍維持原有技術與管理團隊，合作不中斷。',
   },
   {
+    icon: <Leaf size={48} />,
     title: '環保合規・ESG 導向',
     desc: '自建廢水處理系統，符合環保法規，積極落實綠色生產，配合客戶 ESG 政策需求。',
   },
 ];
 
+const { useBreakpoint } = Grid;
+
 export default function About() {
-  const location = useLocation();
-  React.useEffect(() => {
-    if (location.hash) {
-      // 等 DOM render 完再滾動
-      setTimeout(() => {
-        const el = document.querySelector(location.hash);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 0);
+  const screens = useBreakpoint();
+  const sectionRefs = useRef([]);
+  const [activeHash, setActiveHash] = useState(0);
+  const navItems = ['創辦人的話', '歷史背景', '公司優勢', '公司簡介'];
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
+
+    const ctx = gsap.context(() => {
+      sectionRefs.current.forEach((section, index) => {
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top 60%',
+          end: 'bottom 60%',
+          onToggle: (self) => {
+            if (self.isActive) {
+              setActiveHash(index);
+            }
+          },
+        });
+      });
+    });
+    return () => {
+      ctx.revert();
+      clearTimeout(timer);
+    };
+  }, []);
+
+  const handleClick = (index) => {
+    const section = sectionRefs.current[index];
+    if (section) {
+      gsap.to(window, {
+        duration: 1,
+        scrollTo: { y: section, offsetY: 200 },
+        ease: 'power2.out',
+      });
     }
-  }, [location]);
+  };
 
   return (
     <>
       <PageHeader title="關於興樺德" bgText="ABOUT" />
-      <Wrapper>
+      <Wrapper className="wrapper">
         <div className="container">
-          <Ant.Row justify="space-between" id="content">
-            <Ant.Col xs={24} sm={18}>
-              <Ant.Space direction="vertical" style={{ width: '100%' }} size={50}>
-                <div id="part-1">
-                  <h3>基本資訊</h3>
-                  <ul className="list">
-                    {infos.map((it, idx) => (
-                      <li key={idx}>
-                        <h4>{it.label}</h4>
-                        <p>{it.value}</p>
-                      </li>
-                    ))}
-                  </ul>
+          <Row gutter={[64, 0]}>
+            <Col span={24} lg={18}>
+              <div ref={(el) => (sectionRefs.current[0] = el)} className="content-item">
+                <h3>創辦人的話</h3>
+                <div className="greeting">
+                  <p className="description">
+                    我們的使命是在塗層與表面處理領域，
+                    <br />
+                    提供卓越的品質與創新解決方案，
+                    <br />
+                    確保客戶在每一個環節都能獲得成功與滿意。
+                  </p>
+                  <div>
+                    <img src={new URL('@/assets/founder.png', import.meta.url).href} style={{ width: 200 }} />
+                    <p className="founder">
+                      <font>創辦人</font>
+                      <font>蕭見忠</font>
+                    </p>
+                  </div>
+                </div>
+              </div>
 
-                  <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3617.1110451941768!2d121.32929537619621!3d24.962336277863024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a6051a7d27ab%3A0xfa72e8995b6df327!2z6IiI5qi65b636IiI5qWt5pyJ6ZmQ5YWs5Y-477yI5paw5YyX54Ok5ryGfOWwiOalreeyiemrlOWhl-ijnXznmq7ohpzliY3omZXnkIbvvIk!5e0!3m2!1szh-TW!2stw!4v1769150947912!5m2!1szh-TW!2stw"
-                    allowfullscreen=""
-                    style={{ width: '100%', aspectRatio: '16/9' }}
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"
-                  ></iframe>
-                </div>
-                <div id="part-2">
-                  <h3>歷史背景</h3>
-                  <ul className="list history">
-                    {history.map((it) => (
-                      <li key={it.year}>
-                        <h4>{it.year}</h4>
-                        <p>{it.content}</p>
+              <div ref={(el) => (sectionRefs.current[1] = el)} className="content-item">
+                <h3>歷史沿革</h3>
+                <ul className="history">
+                  {history.map((it) => (
+                    <li key={it.year}>
+                      <h4>{it.year}</h4>
+                      <p>{it.content}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div ref={(el) => (sectionRefs.current[2] = el)} className="content-item">
+                <h3>公司優勢</h3>
+                <Row gutter={[40, 32]}>
+                  {advantages.map((it, idx) => (
+                    <Col span={24} md={12}>
+                      <AdvantageCard key={idx}>
+                        <div className="icon-box">{it.icon}</div>
+                        <h4>{it.title}</h4>
+                        <p>{it.desc}</p>
+                      </AdvantageCard>
+                    </Col>
+                  ))}
+                </Row>
+              </div>
+
+              <div ref={(el) => (sectionRefs.current[3] = el)} className="content-item">
+                <h3>公司簡介</h3>
+                <CompanyList>
+                  {infos.map((it, idx) => (
+                    <li key={idx}>
+                      <h4>{it.label}</h4>
+                      <p>{it.value}</p>
+                    </li>
+                  ))}
+                </CompanyList>
+              </div>
+            </Col>
+            {screens.lg && (
+              <Col span={6}>
+                <div className="nav-aside">
+                  <h4>目次</h4>
+                  <ol>
+                    {navItems.map((item, index) => (
+                      <li
+                        key={index}
+                        className={activeHash === index ? 'active' : ''}
+                        onClick={() => handleClick(index)}
+                        style={{ cursor: 'pointer' }}
+                      >
+                        {item}
                       </li>
                     ))}
-                  </ul>
+                  </ol>
                 </div>
-                <div id="part-3" className="advantages">
-                  <h3>公司優勢</h3>
-                  <Ant.Row gutter={[24, 24]}>
-                    {advantages.map((it, idx) => (
-                      <Ant.Col key={idx} xs={24} sm={12}>
-                        <div className="adv-card">
-                          <h4>{it.title}</h4>
-                          <p>{it.desc}</p>
-                        </div>
-                      </Ant.Col>
-                    ))}
-                  </Ant.Row>
-                </div>
-              </Ant.Space>
-            </Ant.Col>
-            <Ant.Col xs={0} sm={4}>
-              <Ant.Anchor
-                offsetTop={150}
-                targetOffset={300}
-                items={[
-                  {
-                    key: 'part-1',
-                    href: '#part-1',
-                    title: '基本資訊',
-                  },
-                  {
-                    key: 'part-2',
-                    href: '#part-2',
-                    title: '歷史背景',
-                  },
-                  {
-                    key: 'part-3',
-                    href: '#part-3',
-                    title: '公司優勢',
-                  },
-                ]}
-              />
-            </Ant.Col>
-          </Ant.Row>
+              </Col>
+            )}
+          </Row>
         </div>
       </Wrapper>
     </>
@@ -166,115 +216,261 @@ export default function About() {
 }
 
 const Wrapper = styled.div`
-  padding: 50px 0;
+  counter-reset: content-section;
 
-  & .advantages {
-    & .adv-card {
-      height: 100%;
-      padding: 28px 24px;
-      border-radius: 12px;
-      background: #fff;
-      border: 1px solid var(--lightBlueColor);
-      transition: all 0.25s ease;
+  & .content-item {
+    margin-bottom: 90px;
 
-      &:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
-      }
+    & > h3 {
+      font-size: 1.75rem;
+      font-weight: 500;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      counter-increment: content-section;
 
-      & h4 {
-        font-size: 20px;
-        font-weight: 600;
-        color: var(--primaryColor);
-        margin-bottom: 12px;
-      }
-
-      & p {
-        font-size: 16px;
-        line-height: 1.7;
-        color: #555;
-        margin: 0;
+      &::before {
+        content: counter(content-section, decimal-leading-zero);
+        color: var(--primary-color);
+        transition: color 0.3s ease;
+        --letter-spacing: 0;
+        font-weight: 700;
+        font-size: 1.1em;
       }
     }
   }
 
-  & > .container {
-    & h3 {
-      font-size: 1.75rem;
-      margin-bottom: 1em;
-      padding-left: 0.5em;
-      position: relative;
+  & .greeting {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
 
-      &::before {
-        content: '';
-        width: 5px;
-        height: 60%;
-        background: var(--primaryColor);
-        position: absolute;
-        left: 0;
-        top: 50%;
-        transform: translateY(-50%);
-      }
+    & .description {
+      font-size: 1.25rem;
+      line-height: 2;
     }
 
-    & .list > li {
-      --border: 1px solid var(--lightBlueColor);
-      border-top: var(--border);
+    & .founder {
       display: flex;
-      flex-direction: column;
+      align-items: center;
 
-      &:last-child {
-        border-bottom: var(--border);
-      }
-
-      & > * {
-        padding: 8px 12px;
-      }
-
-      & > h4 {
-        width: 150px;
-        font-weight: bold;
-        font-size: 18px;
-        color: var(--primaryColor);
-      }
-
-      & > p {
-        font-size: 18px;
-      }
-    }
-
-    & .list.history > li {
-      & > h4 {
-        width: 200px;
-        font-size: 52px;
-        font-family: 'Abril Fatface', serif;
-        color: var(--lightBlueColor);
+      & font:last-child {
+        font-family: 'hand-drawn';
+        font-size: 2.5rem;
+        letter-spacing: 5px;
+        margin: auto;
       }
     }
   }
 
   @media (min-width: 768px) {
-    & > .container {
-      & h3 {
-        font-size: 2rem;
+    & .greeting {
+      flex-direction: row;
+      justify-content: space-evenly;
+      align-items: center;
+
+      & .description {
+        font-size: 1.5rem;
+        line-height: 2.5;
+      }
+    }
+  }
+
+  & .history > li {
+    --border: 1px solid var(--bg-light-color);
+    border-top: var(--border);
+    display: flex;
+    flex-direction: column;
+
+    &:last-child {
+      border-bottom: var(--border);
+    }
+
+    & > * {
+      padding: 8px 12px;
+    }
+
+    & > h4 {
+      width: 200px;
+      font-size: 52px;
+      font-family: 'Alfa Slab One', serif;
+      // font-weight: bold;
+      color: var(--bg-light-color);
+    }
+
+    & > p {
+      font-size: 18px;
+    }
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      align-items: center;
+
+      & > * {
+        padding: 16px 24px;
       }
 
-      & .list > li {
-        flex-direction: row;
+      & > h4 {
+        text-align: center;
+      }
+    }
+  }
+
+  & .nav-aside {
+    position: sticky;
+    top: 20%;
+
+    &::before {
+      content: '';
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--primary-color) 20%, var(--bg-light-color) 20%);
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    & > h4 {
+      font-size: 20px;
+      font-weight: 900;
+      padding: 16px 0;
+    }
+
+    & > ol {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      counter-reset: section;
+
+      & > li {
+        font-size: 18px;
+        font-weight: 500;
+        display: flex;
         align-items: center;
+        gap: 10px;
+        counter-increment: section;
+        transition: color 0.3s ease;
+        cursor: pointer;
 
-        & > * {
-          padding: 16px 24px;
+        &::before {
+          content: counter(section, decimal-leading-zero);
+          width: 16px;
+          color: var(--bg-light-color);
+          transition: color 0.3s ease;
+          font-weight: 700;
+          font-size: 0.9em;
         }
 
-        & > h4 {
+        &.active,
+        &:hover {
+          color: var(--primary-color);
+          font-weight: 700;
+
+          &::before {
+            color: var(--primary-color);
+          }
         }
       }
+    }
+  }
+`;
 
-      & .list.history > li {
-        & > h4 {
-          text-align: center;
-        }
+const AdvantageCard = styled.div`
+  position: relative;
+  background: white;
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border-bottom: 3px solid transparent;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .icon-box {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: white;
+    border: 2px solid var(--bg-light-color);
+    color: var(--primary-color);
+    margin-bottom: 24px;
+    transition: all 0.4s ease;
+    z-index: 1;
+  }
+
+  h4 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--primary-color);
+    position: relative;
+    z-index: 1;
+  }
+
+  p {
+    color: #666;
+    line-height: 1.8;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+    font-size: 1rem;
+    flex-grow: 1;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+
+      .icon-box {
+        transform: scale(1.1) rotate(5deg);
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+      }
+    }
+  }
+`;
+
+const CompanyList = styled.ul`
+  li {
+    --border: 1px solid var(--bg-light-color);
+    border-top: var(--border);
+    display: flex;
+    flex-direction: column;
+
+    &:last-child {
+      border-bottom: var(--border);
+    }
+
+    & > * {
+      padding: 8px 12px;
+    }
+
+    & > h4 {
+      width: 150px;
+      font-weight: bold;
+      font-size: 18px;
+      color: var(--primary-color);
+    }
+
+    & > p {
+      font-size: 18px;
+    }
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      align-items: center;
+
+      & > * {
+        padding: 16px 24px;
       }
     }
   }
