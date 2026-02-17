@@ -178,7 +178,7 @@ const Wrapper = styled.header`
 const Logo = styled.img`
   max-width: 120px;
   object-fit: contain;
-  filter: invert(1) brightness(100);
+  filter: brightness(0) invert(1);
   cursor: pointer;
 
   &:hover {
