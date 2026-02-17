@@ -5,6 +5,7 @@ import Helmet from '../components/Helmet';
 const Layout = React.lazy(() => import('../layouts/Layout'));
 const Home = React.lazy(() => import('../pages/Home'));
 const About = React.lazy(() => import('../pages/About'));
+const Faq = React.lazy(() => import('../pages/Faq'));
 const Contact = React.lazy(() => import('../pages/Contact'));
 
 const routes = [
@@ -13,8 +14,9 @@ const routes = [
     element: <Layout />,
     children: [
       { index: true, element: <Home />, title: '首頁' },
-      { path: 'about', element: <About />, title: '關於' },
-      { path: 'contact', element: <Contact />, title: '聯絡' },
+      { path: 'about', element: <About />, title: '關於興樺德' },
+      { path: 'faq', element: <Faq />, title: '常見問題' },
+      { path: 'contact', element: <Contact />, title: '聯絡我們' },
     ],
   },
 ];

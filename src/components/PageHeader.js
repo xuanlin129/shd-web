@@ -13,9 +13,9 @@ function PageHeader({ title, subtitle, bgText = 'HEADER' }) {
   );
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.section`
   position: relative;
-  padding: 100px 20px 140px;
+  padding: 100px 20px;
   background: linear-gradient(135deg, var(--bg-light-color) 0%, #fff 100%);
   overflow: hidden;
   text-align: center;
@@ -26,7 +26,7 @@ const Wrapper = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 15vw;
+    font-size: 10vw;
     font-weight: 900;
     color: rgba(0, 0, 0, 0.03);
     pointer-events: none;
