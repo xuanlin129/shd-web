@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Collapse } from 'antd';
-import { PlusOutlined, MinusOutlined } from '@ant-design/icons';
 import { Plus, Minus } from '@styled-icons/fa-solid';
 import PageHeader from '../components/PageHeader';
 import Contact from '../components/Home/Contact';
