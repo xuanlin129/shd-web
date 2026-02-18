@@ -16,12 +16,24 @@ function GlobalSpinner() {
     if (loading) {
       setVisible(true);
     } else {
+      window.scrollTo(0, 0);
       const timer = setTimeout(() => {
         setVisible(false);
       }, 1500);
       return () => clearTimeout(timer);
     }
   }, [loading]);
+
+  React.useEffect(() => {
+    if (visible) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [visible]);
 
   if (!mounted) {
     return null;

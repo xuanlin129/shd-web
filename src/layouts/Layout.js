@@ -7,9 +7,9 @@ import Footer from '../components/Footer';
 function Layout() {
   const { pathname } = useLocation();
 
-  React.useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+  // React.useEffect(() => {
+  //   window.scrollTo(0, 0);
+  // }, [pathname]);
 
   return (
     <Wrapper>
