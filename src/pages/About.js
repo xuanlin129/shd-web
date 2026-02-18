@@ -246,6 +246,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    gap: 50px;
 
     & .description {
       font-size: 1.25rem;
@@ -270,6 +271,7 @@ const Wrapper = styled.div`
       flex-direction: row;
       justify-content: space-evenly;
       align-items: center;
+      gap: 0px;
 
       & .description {
         font-size: 1.5rem;
