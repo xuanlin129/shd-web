@@ -48,6 +48,8 @@ const StyledBtn = styled.button`
   overflow: hidden;
   border-radius: 4px;
   transition: color 0.4s ease;
+  /* 修復手機版 border-radius 內的溢出裁切問題 */
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
 
   /* 初始變數預設值，避免未 hover 前報錯或位置錯誤 (雖然 scale 0 看不到) */
   --x: 50%;
