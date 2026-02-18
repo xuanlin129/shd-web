@@ -4,7 +4,9 @@ import Helmet from '../components/Helmet';
 
 const Layout = React.lazy(() => import('../layouts/Layout'));
 const Home = React.lazy(() => import('../pages/Home'));
+const Service = React.lazy(() => import('../pages/Service'));
 const About = React.lazy(() => import('../pages/About'));
+const Process = React.lazy(() => import('../pages/Process'));
 const Faq = React.lazy(() => import('../pages/Faq'));
 const Contact = React.lazy(() => import('../pages/Contact'));
 
@@ -14,7 +16,9 @@ const routes = [
     element: <Layout />,
     children: [
       { index: true, element: <Home />, title: '首頁' },
+      { path: 'service', element: <Service />, title: '服務項目' },
       { path: 'about', element: <About />, title: '關於興樺德' },
+      { path: 'process', element: <Process />, title: '產品製程' },
       { path: 'faq', element: <Faq />, title: '常見問題' },
       { path: 'contact', element: <Contact />, title: '聯絡我們' },
     ],

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import * as Ant from 'antd';
 import { MailOutline } from 'styled-icons/material';
 import * as AppActions from '../utils';
-import RippleButton from './RippleButton';
+import RipperButton from './RipperButton';
 
 export default function Contact() {
   return (
@@ -14,21 +14,23 @@ export default function Contact() {
             <h4>聯絡我們</h4>
             <p>如果您有任何疑問或需要報價，請隨時與我們聯繫。</p>
           </Ant.Col>
-          <Ant.Col sm={24} md={8}>
-            <Ant.Space vertical verticalsize={20}>
-              <div>
+          <Ant.Col sm={24} md={4}>
+            {/* <Ant.Space vertical verticalsize={20}> */}
+            {/* <div>
                 <h5>電話：02-8292-1781</h5>
                 <p>營業時間：08:30 ～ 18:30（ 一 ～ 五 ）</p>
-              </div>
-              <RippleButton
-                style={{ width: '100%', primary: '#fff', secondary: 'var(--primary-color)' }}
-                onClick={() => {
-                  AppActions.navigate('/contact');
-                }}
-              >
-                <MailOutline size={20} /> 聯絡我們
-              </RippleButton>
-            </Ant.Space>
+              </div> */}
+            <RipperButton
+              style={{ width: '100%' }}
+              primary="#fff"
+              secondary="var(--primary-color)"
+              onClick={() => {
+                AppActions.navigate('/contact');
+              }}
+            >
+              <MailOutline size={20} /> 聯絡我們
+            </RipperButton>
+            {/* </Ant.Space> */}
           </Ant.Col>
         </Ant.Row>
       </div>
@@ -82,7 +84,7 @@ const Wrapper = styled.section`
 
     & > .container {
       & > .ant-row {
-        justify-content: space-between;
+        justify-content: space-evenly;
       }
 
       & h4 {
