@@ -6,19 +6,31 @@ function GlobalSpinner() {
   const [mounted, setMounted] = React.useState(false); // workaround to handle the initial flash issue
   const [info = {}] = useOutlet('loading');
   const { loading, message } = info;
+  const [visible, setVisible] = React.useState(false);
 
   React.useEffect(() => {
     setMounted(true);
   }, [mounted]);
+
+  React.useEffect(() => {
+    if (loading) {
+      setVisible(true);
+    } else {
+      const timer = setTimeout(() => {
+        setVisible(false);
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [loading]);
 
   if (!mounted) {
     return null;
   }
 
   return (
-    <Backdrop $visible={loading}>
-      <Wrapper $visible={loading}>
-        <img className="logo" src={new URL('@/assets/logo.png', import.meta.url).href} alt="spinner" />
+    <Backdrop $visible={visible}>
+      <Wrapper $visible={visible}>
+        <img className="logo" src={new URL('@/assets/logo-squ.png', import.meta.url).href} alt="spinner" />
         <div className="msg">{message || '請稍候...'}</div>
       </Wrapper>
     </Backdrop>
@@ -78,7 +90,6 @@ const Wrapper = styled.div`
     height: 64px;
     object-fit: contain;
     margin-bottom: 15px;
-    mix-blend-mode: difference;
   }
 `;
 
