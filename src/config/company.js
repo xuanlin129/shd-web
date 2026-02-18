@@ -7,4 +7,5 @@ export default {
   email: 'yichieh551314@gmail.com',
   uni_no: '27797775',
   line: 'https://lin.ee/8HxkoGPw',
+  facebook: 'https://www.facebook.com/share/1EbrbTH7GW/?mibextid=wwXIfr',
 };

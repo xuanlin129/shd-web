@@ -14,7 +14,7 @@ const navItems = [
   { path: '/about', label: '公司介紹' },
   { path: '/process', label: '產品製程' },
   { path: '/faq', label: '常見問題' },
-  { path: '/contact', label: '聯繫我們' },
+  { path: '/contact', label: '聯絡我們' },
 ];
 
 function Header() {

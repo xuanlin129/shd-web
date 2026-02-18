@@ -30,7 +30,7 @@ function Footer() {
                 興樺德興業有限公司專注於高品質粉體塗裝服務，我們以環保無溶劑製程與嚴格品質控管，為您的產品提供最完美的表面處理方案。
               </p>
               <div className="social-links">
-                <a href="#" target="_blank" rel="noopener noreferrer">
+                <a href={company.facebook} target="_blank" rel="noopener noreferrer">
                   <Facebook size={24} />
                 </a>
                 <a href={company.line} target="_blank" rel="noopener noreferrer">
