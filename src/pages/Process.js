@@ -60,7 +60,7 @@ const equipments = [
   {
     title: '自家廢水處理系統',
     desc: '符合環保法規，合法合規無疑慮。積極落實綠色生產，符合客戶ESG政策需求。',
-    img: new URL('@/assets/environment_2.jpg', import.meta.url).href,
+    img: new URL('@/assets/environment_2.JPG', import.meta.url).href,
   },
 ];
 
