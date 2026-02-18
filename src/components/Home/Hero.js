@@ -10,7 +10,7 @@ function Hero() {
           <font>在耐用與環保之間，找到最好的平衡</font>
           <font>專業粉體塗裝｜無溶劑製程｜穩定品質 | 值得信賴</font>
         </p>
-        <img src={new URL('@/assets/paint.png', import.meta.url).href} className="bg-paint" />
+        <img src={new URL('@/assets/paint-color.png', import.meta.url).href} className="bg-paint" />
       </div>
       <VideoWrapper>
         <video src={new URL('@/assets/banner.mp4', import.meta.url).href} autoPlay muted playsInline loop />
@@ -74,6 +74,7 @@ const Wrapper = styled.section`
       left: 50%;
       transform: translate(-50%, -45%) scaleX(1);
       pointer-events: none;
+      z-index: -1;
     }
   }
 
@@ -112,6 +113,7 @@ const VideoWrapper = styled.div`
   border-radius: 2rem;
   overflow: hidden;
   pointer-events: none;
+  z-index: -1;
 
   &::before {
     content: '';

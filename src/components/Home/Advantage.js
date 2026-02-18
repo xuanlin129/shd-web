@@ -47,7 +47,7 @@ const Wrapper = styled.section`
   & > .container {
     & > .ant-row {
       width: 100%;
-      box-shadow: 0 0 10px rgb(from var(--primary-color) r g b / 0.5);
+      box-shadow: 0 0 5px rgb(from var(--primary-color) r g b / 0.2);
       border-radius: 2rem;
       margin: auto !important;
       padding: 30px 0;
